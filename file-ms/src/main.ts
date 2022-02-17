@@ -7,8 +7,12 @@ async function bootstrap() {
     AppModule,
     {
       transport: Transport.TCP,
+      options: {
+        host: '127.0.0.1',
+        port: 3007,
+      },
     },
   );
-  app.listen();
+  await app.listen();
 }
 bootstrap();
