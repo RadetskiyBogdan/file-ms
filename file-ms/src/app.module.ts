@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConnectionOptions } from 'typeorm';
+
+import { configuration } from './config/configuration';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-})
-@Module({
-  imports: [ConfigModule.forRoot()],
+    imports: [TypeOrmModule.forRoot(configuration.database as ConnectionOptions)],
+    controllers: [AppController]
 })
 export class AppModule {}
