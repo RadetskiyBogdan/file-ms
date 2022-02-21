@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConnectionOptions } from 'typeorm';
+import { Connection, ConnectionOptions } from 'typeorm';
 
 import { configuration } from './config/configuration';
+import { DevelopersModule } from './developers/developers.module';
 
 @Module({
-    imports: [TypeOrmModule.forRoot(configuration.database as ConnectionOptions)],
-    controllers: [AppController]
+    imports: [TypeOrmModule.forRoot(configuration.database as ConnectionOptions), DevelopersModule]
 })
-export class AppModule {}
+export class AppModule {
+    constructor(private connection: Connection) {}
+}
