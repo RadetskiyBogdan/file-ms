@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 
-import { Developer } from './developer.entity';
+import { Developer } from '../../entities/developer.entity';
 import { DevelopersService } from './developers.service';
 
 @Controller('developers')
