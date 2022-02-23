@@ -5,9 +5,16 @@ import * as xlsx from 'xlsx';
 export class FilesService {
     fileParser(file: Express.Multer.File) {
         const workbook = xlsx.read(file.buffer['data'], { type: 'buffer' });
-        const sheetNameList = workbook.SheetNames;
-        const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNameList[1]]);
+        const sheetNames = workbook.SheetNames;
+        const totalSheets = sheetNames.length;
 
-        return data;
+        const parsedData = [];
+
+        for (let i = 0; i < totalSheets; i++) {
+            const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNames[i]]);
+
+            parsedData.push(...data);
+        }
+        return parsedData;
     }
 }
