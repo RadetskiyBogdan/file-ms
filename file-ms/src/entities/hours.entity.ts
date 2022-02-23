@@ -5,23 +5,30 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
-    OneToMany
+    ManyToOne,
+    JoinColumn
 } from 'typeorm';
-import { MonthProjectHours } from './hours.entity';
+import { Developer } from './developer.entity';
+import { Project } from './project.entity';
 
 @Entity()
-export class Project {
+export class MonthProjectHours {
     @PrimaryGeneratedColumn()
-    id: number;
+    public id: number;
+
+    @ManyToOne(() => Developer, (developer) => developer.monthProjectHours)
+    @JoinColumn({ name: 'developer_id' })
+    public developer: Developer;
+
+    @ManyToOne(() => Project, (project) => project.monthProjectHours)
+    @JoinColumn({ name: 'project_id' })
+    public project: Project;
 
     @Column()
-    name: string;
+    public month: string;
 
     @Column()
-    rate: number;
-
-    @Column()
-    budget: number;
+    public hours: number;
 
     @CreateDateColumn({ type: 'timestamp without time zone', name: 'created_at' })
     public createdAt: Date;
@@ -31,7 +38,4 @@ export class Project {
 
     @DeleteDateColumn({ type: 'timestamp without time zone', name: 'deleted_at', nullable: true })
     public deletedAt: Date;
-
-    @OneToMany(() => MonthProjectHours, (monthProjectHour) => monthProjectHour.project)
-    public monthProjectHours: MonthProjectHours[];
 }
