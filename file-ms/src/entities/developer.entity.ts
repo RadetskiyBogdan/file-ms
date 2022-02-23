@@ -1,14 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+    DeleteDateColumn,
+    OneToMany
+} from 'typeorm';
+import { MonthProjectHours } from './hours.entity';
 
 @Entity()
 export class Developer {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ name: 'first_name' })
     firstName: string;
 
-    @Column()
+    @Column({ name: 'last_name' })
     lastName: string;
 
     @Column()
@@ -17,7 +26,7 @@ export class Developer {
     @Column()
     salary: number;
 
-    @Column()
+    @Column({ name: 'extra_rate' })
     extraRate: number;
 
     @Column()
@@ -31,4 +40,7 @@ export class Developer {
 
     @DeleteDateColumn({ type: 'timestamp without time zone', name: 'deleted_at', nullable: true })
     public deletedAt: Date;
+
+    @OneToMany(() => MonthProjectHours, (monthProjectHour) => monthProjectHour.developer)
+    public monthProjectHours: MonthProjectHours[];
 }

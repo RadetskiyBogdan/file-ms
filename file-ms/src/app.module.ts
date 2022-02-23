@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection, ConnectionOptions } from 'typeorm';
+import { ConnectionOptions } from 'typeorm';
 
 import { configuration } from './config/configuration';
 import { DevelopersModule } from './modules/developers/developers.module';
 import { FilesModule } from './modules/files/files.module';
+import { MonthProjectHoursModule } from './modules/month-project-hours/hours.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
@@ -12,9 +13,8 @@ import { ProjectsModule } from './modules/projects/projects.module';
         TypeOrmModule.forRoot(configuration.database as ConnectionOptions),
         DevelopersModule,
         FilesModule,
-        ProjectsModule
+        ProjectsModule,
+        MonthProjectHoursModule
     ]
 })
-export class AppModule {
-    constructor(private connection: Connection) {}
-}
+export class AppModule {}
